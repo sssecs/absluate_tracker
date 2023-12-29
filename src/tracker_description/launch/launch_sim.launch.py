@@ -8,7 +8,7 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
-
+from glob import glob
 
 
 def generate_launch_description():
@@ -40,11 +40,18 @@ def generate_launch_description():
                         output='screen')
 
 
-
+    rviz = Node(
+            package='rviz2',
+            namespace='',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d' , [os.path.join(get_package_share_directory(package_name), 'config', 'config.rviz')] ]
+        )
 
     # Launch them all!
     return LaunchDescription([
         rsp,
         gazebo,
         spawn_entity,
+        rviz
     ])
