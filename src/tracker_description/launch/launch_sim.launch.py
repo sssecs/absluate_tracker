@@ -47,11 +47,19 @@ def generate_launch_description():
             name='rviz2',
             arguments=['-d' , [os.path.join(get_package_share_directory(package_name), 'config', 'config.rviz')] ]
         )
+    
+    image_capture = Node(
+                     package='camera_calibration',
+                     namespace='',
+                     executable='camera_capture',
+                     name='camera_capture'
+    )
 
     # Launch them all!
     return LaunchDescription([
         rsp,
         gazebo,
         spawn_entity,
-        rviz
+        rviz,
+        image_capture
     ])
